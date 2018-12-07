@@ -60,9 +60,10 @@
         scenePrg.uniType[0]     = 'uniform2fv';
 
         // 頂点属性を定義する @@@
+        // 頂点は必ずしもvecでなければならないけわけではない
         let vertices = [];
-        for(let i = 0; i < 100; ++i){
-            vertices.push(i / 100.0);
+        for(let i = 0; i < 1000; ++i){
+            vertices.push(i / 1000.0);
         }
 
         // 頂点座標の配列から VBO（Vertex Buffer Object）を生成する

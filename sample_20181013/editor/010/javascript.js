@@ -70,6 +70,7 @@
                 j, -1.0
             );
         }
+        console.log(vertices)
 
         // 頂点座標の配列から VBO（Vertex Buffer Object）を生成する
         let VBO = [
@@ -103,9 +104,9 @@
             // 事前に設定済みの色でクリアする
             gl.clear(gl.COLOR_BUFFER_BIT);
             // バインドした VBO にもとづき頂点を描画する @@@
-            gl.drawArrays(gl.POINTS, 0, vertices.length / 2);
+            // gl.drawArrays(gl.POINTS, 0, vertices.length / 2);
             // 二回目の描画ではプリミティブをラインにする @@@
-            gl.drawArrays(gl.LINES, 0, vertices.length / 2);
+            gl.drawArrays(gl.LINE_STRIP, 0, vertices.length / 2);
             // GPU 上のコマンドバッファを確実に実行させる
             gl.flush();
             // render を再帰呼出しして描画処理をループさせる

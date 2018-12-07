@@ -84,7 +84,10 @@
 
         // 頂点をどのように結ぶかをインデックスで指定する @@@
         let index = [
-            0, 1, 2, 0, 4, 3
+            0, 1, 2, 
+            0, 4, 3,
+            0, 3, 1,
+            0, 4, 2
         ];
         // インデックス配列から IBO（Index Buffer Object）を生成しておく @@@
         let IBO = createIbo(index);
@@ -119,8 +122,7 @@
             gl.clear(gl.COLOR_BUFFER_BIT);
 
             // バインドした VBO と IBO にもとづき頂点を描画する @@@
-            gl.drawElements(gl.TRIANGLES, index.length, gl.UNSIGNED_SHORT, 0);
-
+            gl.drawElements(gl.LINE_STRIP, index.length, gl.UNSIGNED_SHORT, 0);
             // GPU 上のコマンドバッファを確実に実行させる
             gl.flush();
             // render を再帰呼出しして描画処理をループさせる

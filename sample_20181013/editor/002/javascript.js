@@ -37,6 +37,7 @@
         // マウスの移動に応じて配列の中身を更新する @@@
         window.addEventListener('mousemove', (eve) => {
             // client 座標を正規化して -1.0 ～ 1.0 の範囲に変換する
+            // スクリーン座標系
             let x = (eve.clientX / canvasWidth) * 2.0 - 1.0;
             let y = (eve.clientY / canvasHeight) * 2.0 - 1.0;
             mouse = [x, -y];
@@ -60,6 +61,9 @@
         // プログラムオブジェクトから unifrom location を取得しタイプを設定する @@@
         scenePrg.uniLocation[0] = gl.getUniformLocation(scenePrg.program, 'mouse');
         scenePrg.uniType[0]     = 'uniform2fv';
+        
+        scenePrg.uniLocation[1] = gl.getUniformLocation(scenePrg.program, 'nowTime');
+        scenePrg.uniType[1]     = 'uniform1f';
 
         // 頂点座標を定義する
         let position = [
@@ -94,6 +98,7 @@
 
             // uniform 変数をリアルタイムにシェーダにプッシュする @@@
             gl[scenePrg.uniType[0]](scenePrg.uniLocation[0], mouse);
+            gl[scenePrg.uniType[1]](scenePrg.uniLocation[1], nowTime);
 
             // VBO を有効化する
             setAttribute(VBO, scenePrg.attLocation, scenePrg.attStride);

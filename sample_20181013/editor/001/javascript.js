@@ -55,6 +55,7 @@
         // 外部ファイルのシェーダのソースを取得しプログラムオブジェクトを生成
         let vs = createShader(WE.vs, gl.VERTEX_SHADER);
         let fs = createShader(WE.fs, gl.FRAGMENT_SHADER);
+        // シェーダーのリンク
         let prg = createProgram(vs, fs);
         if(prg == null){return;}
         scenePrg = new ProgramParameter(prg);
@@ -63,22 +64,25 @@
     }
 
     // 頂点の情報などあらゆる初期化処理を行い描画開始の準備をする
-    function init(texture){
+    function init(){
         // プログラムオブジェクトから attribute location を取得しストライドを設定する
         scenePrg.attLocation[0] = gl.getAttribLocation(scenePrg.program, 'position');
         scenePrg.attStride[0]   = 3;
         // 頂点座標を定義する
+        // CPU側でまずは読み込む
+        // 頂点のローカル座標
         let position = [
              0.0,  0.0,  0.0, // 1 つ目の頂点の X, Y, Z
              1.0,  1.0,  0.0, // 2 つ目の頂点の X, Y, Z
             -1.0,  1.0,  0.0, // 3 つ目の頂点の X, Y, Z
              1.0, -1.0,  0.0, // 4 つ目の頂点の X, Y, Z
-            -1.0, -1.0,  0.0  // 5 つ目の頂点の X, Y, Z
+            -1.0, -1.0,  0.0,  // 5 つ目の頂点の X, Y, Z
+             0.0,  0.0,  0.0
         ];
         // 頂点座標の配列から VBO（Vertex Buffer Object）を生成する
         let VBO = [createVbo(position)];
         // WebGL で canvas をクリアする色の設定
-        gl.clearColor(0.0, 0.0, 0.0, 1.0);
+        gl.clearColor(0.0, 1.0, 1.0, 1.0);
         // 未初期化の変数を初期化する
         startTime = Date.now();
         nowTime = 0;
@@ -98,6 +102,7 @@
             // どのプログラムオブジェクトを利用するか設定
             gl.useProgram(scenePrg.program);
             // VBO を有効化する
+            // gpuにデータを送ることをバインドと言う
             setAttribute(VBO, scenePrg.attLocation, scenePrg.attStride);
             // 事前に設定済みの色でクリアする
             gl.clear(gl.COLOR_BUFFER_BIT);

@@ -4,11 +4,12 @@ attribute float vertex;
 uniform vec2 mouse;
 
 void main(){
+    // 仮に頂点が0だったら
     // マウスカーソル X 値が距離に影響するように
     float dist = vertex * mouse.x;
 
     // マウスカーソル Y 値が回転量に影響するように
-    float rad = vertex * mouse.y * 3.1415926;
+    float rad = vertex * mouse.y * 3.14;
 
     // サインとコサインを求める
     float s = sin(rad);
